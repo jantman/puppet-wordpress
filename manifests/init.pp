@@ -44,7 +44,6 @@
 # [*wp_lang*]
 #   WordPress Localized Language. Default: ''
 #
-#
 # [*wp_plugin_dir*]
 #   WordPress Plugin Directory. Full path, no trailing slash. Default: WordPress Default
 #
@@ -65,6 +64,9 @@
 #
 # [*wp_site_domain*]
 #   Specifies the `DOMAIN_CURRENT_SITE` value that will be used when configuring multisite. Typically this is the address of the main wordpress instance.  Default: ''
+#
+# [*manage_config*]
+#   Boolean. If false, do not manage wp-config.php at all.
 #
 # === Requires
 #
@@ -90,6 +92,7 @@ class wordpress (
   $wp_proxy_port        = '',
   $wp_multisite         = false,
   $wp_site_domain       = '',
+  $manage_config        = true,
 ) {
   anchor { 'wordpress::begin': }
   -> class { 'wordpress::app':
@@ -110,6 +113,7 @@ class wordpress (
     wp_proxy_port        => $wp_proxy_port,
     wp_multisite         => $wp_multisite,
     wp_site_domain       => $wp_site_domain,
+    manage_config        => $manage_config,
   }
   -> class { 'wordpress::db':
     create_db      => $create_db,
